@@ -39,13 +39,14 @@ def draw_route(route, coords, ax, color="red"):
         draw_edge(od, coords, ax, color=color)
 
 
-def draw_points(coords, node_labels, ax):
+def draw_points(coords, node_labels, ax, show_labels=True):
     x,y = zip(*coords)
     x_depot, y_depot = x[0], y[0]
     x_customers, y_customers = x[1:],y[1:]
-    ax.scatter(x_customers, y_customers, color="k", s=5, label="Customers")
-    ax.scatter([x_depot], [y_depot], color="k", marker='s', s=20, label="Depot")
-    draw_labels(node_labels, coords, ax)
+    ax.scatter(x_customers, y_customers, color="k", s=20, facecolors='none', edgecolors='k', label="Customers")
+    ax.scatter([x_depot], [y_depot], color="k", marker='s', s=50, facecolors='gray', label="Depot")
+    if show_labels:
+        draw_labels(node_labels, coords, ax)
 
 def draw_nodes(coords, node_labels, ax, hide_axis_labels=True):
     # Set limit box

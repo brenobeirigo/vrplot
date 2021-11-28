@@ -3,6 +3,7 @@ from util import euclidean_dist
 import numpy as np
 import static, util
 import itertools
+from copy import copy
 
 
 def get_possible_schedules(*vehicle_customer_assignments):
@@ -97,7 +98,7 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
 
     nodes_to_visit = [depot] + list(nodes)
     route = deque([start])
-    
+    sols = []
     nodes_to_visit.remove(start)
     
     
@@ -117,6 +118,7 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
         next_visit = nodes_to_visit[farthest_node_pos]
         j = cheapest_insertion_pos(next_visit, route, node_coords)
         route.insert(j, next_visit)
+        sols.append(copy(route))
 
         # Update list of nodes to visit
         del nodes_to_visit[farthest_node_pos]
@@ -124,4 +126,4 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
     # Put depot in the beginning
     route.rotate(len(route)-route.index(depot))
     route.append(depot)
-    return tuple(route)
+    return tuple(route), [(tuple(s),) for s in sols]

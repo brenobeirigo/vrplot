@@ -29,20 +29,21 @@ def get_us_plot(figsize=(15,10), pad=500):
     us_ax.set_ylim(min(y)-pad, max(y)+pad)
     return us_fig, us_ax
 
-def construct_route(route, nodes, coords, ax=None, figsize=(5,5), hide_axis_labels=True):
-    if ax == None:
+def construct_route(route, nodes, coords, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True):
+    if ax == None or fig == None:
         fig, ax = plt.subplots(figsize=figsize)
         ax.set_xlim(0,1)
         ax.set_ylim(0,1)
         
-    ax.set_title(f"Cost: {util.get_cost(route, coords):6.2f}")
+    ax.set_title(cost_header(util.get_cost(route, coords)))
     draw_nodes(coords, nodes, ax)
     draw_route(route, coords, ax)
     
     if hide_axis_labels:
         ax.axes.xaxis.set_ticklabels([])
         ax.axes.yaxis.set_ticklabels([])
-        
+    
+    return fig, ax
 ################################################################################
 ## PLOT ########################################################################
 ################################################################################
@@ -116,7 +117,7 @@ def draw_routes(routes, node_ids, coords, vehicle_route_colors, ax, lim=None, hi
         ax.set_ylim(xmin,xmax)
     
     # Print total cost (sum of all route costs)
-    ax.set_title(f"Cost: {util.get_total_cost(routes, coords):6.2f}")
+    ax.set_title(cost_header(util.get_total_cost(routes, coords)))
     
     # Draw routes and points
     draw_vehicle_routes(routes, vehicle_route_colors, coords, ax)
@@ -127,3 +128,6 @@ def draw_routes(routes, node_ids, coords, vehicle_route_colors, ax, lim=None, hi
     if hide_axis_labels:
         ax.axes.xaxis.set_ticklabels([])
         ax.axes.yaxis.set_ticklabels([])
+
+def cost_header(cost):
+    return f"Cost: {cost:10,.2f}"

@@ -18,6 +18,9 @@ def get_random_nodes(n_customers, x_depot=0.5, y_depot=0.5):
 def euclidean_dist(v1, v2):
     return np.sqrt(np.sum((np.array(v1) - np.array(v2)) ** 2))   
 
+def dist(i,j, coords):
+    return euclidean_dist(coords[i], coords[j])
+
 def get_cost(route, coords):
     cost = 0
     for o,d in zip(route[1:], route[:-1]):

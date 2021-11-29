@@ -42,7 +42,7 @@ def construct_route(route, node_coords, node_ids, fig=None, ax=None, figsize=(8,
         figure, axis = fig, ax
         
     static.draw_nodes(node_coords, node_ids, axis)        
-    axis.set_title(f"Cost: {util.get_cost(route, node_coords):6.2f}")
+    axis.set_title(static.cost_header(util.get_cost(route, node_coords)))
 
     edges = list(zip(route[:-1], route[1:]))
 

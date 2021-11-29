@@ -157,9 +157,11 @@ def neighborhood_search_2opt(route, coords, stop_after=None):
     route_cost = util.get_cost(route, coords)
 
     count_improved_routes = 0
-    print(f"{count_improved_routes:>3} "
+    print(
+        f"{count_improved_routes:>3} "
         f"- Cost: {route_cost:10,.3f} "
-        f"- Route: {route}")
+        # f"- Route: {route}"
+        )
 
     while True:
         
@@ -175,7 +177,8 @@ def neighborhood_search_2opt(route, coords, stop_after=None):
             route_cost = improved_route_cost
             print(f"{count_improved_routes:>3} "
                 f"- Cost: {improved_route_cost:10,.3f} "
-                f"- Route: {improved_route}")
+                # f"- Route: {improved_route}"
+                )
         else:
             break
     

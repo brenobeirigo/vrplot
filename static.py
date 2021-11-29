@@ -29,13 +29,18 @@ def get_us_plot(figsize=(15,10), pad=500):
     us_ax.set_ylim(min(y)-pad, max(y)+pad)
     return us_fig, us_ax
 
-def construct_route(route, nodes, coords, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True):
+def construct_route(route, nodes, coords, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True, label=None):
     if ax == None or fig == None:
         fig, ax = plt.subplots(figsize=figsize)
         ax.set_xlim(0,1)
         ax.set_ylim(0,1)
+    
+    title = cost_header(util.get_cost(route, coords))
+    
+    if label != None:
+        title = f"{label} ({title})"
         
-    ax.set_title(cost_header(util.get_cost(route, coords)))
+    ax.set_title(title)
     draw_nodes(coords, nodes, ax)
     draw_route(route, coords, ax)
     
@@ -78,12 +83,11 @@ def draw_points(coords, node_labels, ax, show_labels=True):
     if show_labels:
         draw_labels(node_labels, coords, ax)
 
-def draw_nodes(coords, node_labels, ax=None, hide_axis_labels=True):
+def draw_nodes(coords, node_labels, ax=None, figsize = (8, 8), hide_axis_labels=True):
     if ax == None:
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=figsize)
         ax.set_xlim(0,1)
         ax.set_ylim(0,1)
-        figsize = (8, 8)
 
     draw_points(coords, node_labels, ax)        
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=2, frameon=False)

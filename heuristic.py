@@ -1,7 +1,7 @@
 from collections import deque
-from util import euclidean_dist
+from util import euclidean_dist, dist
 import numpy as np
-import static, util
+import util
 import itertools
 from copy import copy
 
@@ -127,3 +127,64 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
     route.rotate(len(route)-route.index(depot))
     route.append(depot)
     return tuple(route), [(tuple(s),) for s in sols]
+
+def get_route_2opt(route, coords):
+    
+    min_change = 0
+    # Find the best move
+    for i in range(len(route) - 2):
+        for j in range(i + 2, len(route) - 1):
+            
+            # Symmetric distances -> change only the tour length between 4 cities
+            change = (
+                dist(route[i], route[j], coords)
+                + dist(route[i+1], route[j+1], coords)
+                - dist(route[i], route[i+1], coords)
+                - dist(route[j], route[j+1], coords))
+            if change < min_change:
+                min_change = change
+                min_i, min_j = i, j
+    
+    # Update route with best move
+    route_updated = np.array(route)
+    if min_change < 0:
+        route_updated[min_i+1:min_j+1] = route_updated[min_i+1:min_j+1][::-1]
+    
+    return tuple(route_updated)
+
+def neighborhood_search_2opt(route, coords, stop_after=None):
+    
+    route_cost = util.get_cost(route, coords)
+
+    count_improved_routes = 0
+    print(f"{count_improved_routes:>3} "
+        f"- Cost: {route_cost:10,.3f} "
+        f"- Route: {route}")
+
+    while True:
+        
+        if stop_after !=None and count_improved_routes >= stop_after:
+            break
+        
+        improved_route = get_route_2opt(route, coords)
+        improved_route_cost = util.get_cost(improved_route, coords)
+        
+        if improved_route_cost < route_cost:
+            count_improved_routes+=1    
+            route = improved_route
+            route_cost = improved_route_cost
+            print(f"{count_improved_routes:>3} "
+                f"- Cost: {improved_route_cost:10,.3f} "
+                f"- Route: {improved_route}")
+        else:
+            break
+    
+    return route
+        
+# coords_2opt = util.get_random_nodes(50)
+# nodes_2opt = list(range(len(coords_2opt)))
+
+# route = tuple([nodes_2opt[0]] + nodes_2opt[1:] + [nodes_2opt[0]])
+# neighborhood_search_2opt(route, stop_after=1)
+
+    

@@ -156,33 +156,25 @@ def neighborhood_search_2opt(route, coords, stop_after=None):
     
     route_cost = util.get_cost(route, coords)
 
-    count_improved_routes = 0
-    print(
-        f"{count_improved_routes:>3} "
-        f"- Cost: {route_cost:10,.3f} "
-        # f"- Route: {route}"
-        )
+    improvement_history = [(route, route_cost)]
 
     while True:
         
-        if stop_after !=None and count_improved_routes >= stop_after:
+        if stop_after !=None and len(improvement_history) >= stop_after:
             break
         
         improved_route = get_route_2opt(route, coords)
         improved_route_cost = util.get_cost(improved_route, coords)
         
         if improved_route_cost < route_cost:
-            count_improved_routes+=1    
+            improvement_history.append((improved_route, improved_route_cost))    
             route = improved_route
             route_cost = improved_route_cost
-            print(f"{count_improved_routes:>3} "
-                f"- Cost: {improved_route_cost:10,.3f} "
-                # f"- Route: {improved_route}"
-                )
+ 
         else:
             break
     
-    return route
+    return route, improvement_history
         
 # coords_2opt = util.get_random_nodes(50)
 # nodes_2opt = list(range(len(coords_2opt)))

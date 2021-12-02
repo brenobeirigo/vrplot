@@ -5,28 +5,6 @@ import itertools
 from copy import copy
 
 
-def get_possible_schedules(*vehicle_customer_assignments):
-    schedules = []
-    for vehicle_customers in vehicle_customer_assignments:
-        schedules.append(itertools.permutations(vehicle_customers))
-    
-    schedules = itertools.product(*schedules)
-    return list(schedules)
-
-def get_brute_force(customers, depot=0, n_vehicles=1, distinguish_vehicles=True):
-    # Only accept single-digit customer ids
-    if np.max(customers) > 9:
-        return None
-    
-    routes = set(["".join(c) for c in list(itertools.permutations(["|"] *(n_vehicles-1) + list(map(str,set(customers)))))])
-    routes = [tuple([(depot,)+tuple(map(int,list(e)))+(depot,) if e!="" else tuple([]) for e in r.split("|")]) for r in routes]
-    
-    if not distinguish_vehicles:
-        routes = [tuple(r) for r in set([frozenset(r) for r in routes])]
-    
-    return routes
-
-
 def get_route_nearest_neighborhood(nodes, node_coords, start=0, depot=0):
 
     nodes_to_visit = [depot] + list(nodes)
@@ -174,11 +152,5 @@ def neighborhood_search_2opt(route, coords, stop_after=None):
             break
     
     return route, improvement_history
-        
-# coords_2opt = util.get_random_nodes(50)
-# nodes_2opt = list(range(len(coords_2opt)))
-
-# route = tuple([nodes_2opt[0]] + nodes_2opt[1:] + [nodes_2opt[0]])
-# neighborhood_search_2opt(route, stop_after=1)
 
     

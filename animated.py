@@ -7,8 +7,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from IPython.display import HTML
-import static
-import util
+from vrplot import util, static
 
 
 def show_solutions(solutions, node_coords, node_ids, fig=None, ax=None, figsize=(8,8), vehicle_route_colors = ['#e41a1c', '#377eb8','#4daf4a','#984ea3','#ff7f00', '#ffff33']):

@@ -1,8 +1,8 @@
-import matplotlib.patches as patches
-import matplotlib.pyplot as plt
-import numpy as np
-import util
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from vrplot import util
 
 def get_data_us_capitals():
     # http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html

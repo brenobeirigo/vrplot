@@ -1,5 +1,4 @@
 import numpy as np
-from collections import deque
 
 def get_random_nodes(n_customers, x_depot=0.5, y_depot=0.5):
     # Random x and y coordinates for customers

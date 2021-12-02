@@ -1,7 +1,6 @@
 from collections import deque
-from util import euclidean_dist, dist
+from vrplot.util import euclidean_dist, dist, get_cost
 import numpy as np
-import util
 import itertools
 from copy import copy
 
@@ -154,7 +153,7 @@ def get_route_2opt(route, coords):
 
 def neighborhood_search_2opt(route, coords, stop_after=None):
     
-    route_cost = util.get_cost(route, coords)
+    route_cost = get_cost(route, coords)
 
     improvement_history = [(route, route_cost)]
 
@@ -164,7 +163,7 @@ def neighborhood_search_2opt(route, coords, stop_after=None):
             break
         
         improved_route = get_route_2opt(route, coords)
-        improved_route_cost = util.get_cost(improved_route, coords)
+        improved_route_cost = get_cost(improved_route, coords)
         
         if improved_route_cost < route_cost:
             improvement_history.append((improved_route, improved_route_cost))    

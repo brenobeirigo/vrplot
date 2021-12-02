@@ -1,4 +1,4 @@
-import util
+import vrplot.util as util
 import numpy as np
 
 

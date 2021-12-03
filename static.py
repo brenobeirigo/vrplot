@@ -25,7 +25,7 @@ def get_us_plot(figsize=(15,10)):
     us_depot, us_customer_nodes = us_nodes[0], us_nodes[1:]
 
     us_fig, us_ax = plt.subplots(figsize=figsize)
-    x, y = (list(zip(*us_coords)))
+
     us_ax.set_xlim(-500, 8500)
     us_ax.set_ylim(-500, 5500)
     us_ax.set_xticks(np.arange(-500, 8500, 500))
@@ -114,15 +114,26 @@ def draw_labels(coords, node_labels, ax):
             textcoords="offset points")
 
 def draw_routes(routes, coords, node_labels, vehicle_route_colors, ax, lim=None, hide_axis_labels=True):
-
-    # Erase previous graph
-    ax.cla()
+    
+    # Saving info from last plotted ax
+    
+    xticks = ax.get_xticks()
+    yticks = ax.get_yticks()
     
     # Set limit box
     if lim != None:
         xmin, xmax, ymin, ymax = lim
-        ax.set_xlim(xmin,xmax)
-        ax.set_ylim(xmin,xmax)
+    else:
+        xmin, xmax, ymin, ymax = xlim = ax.get_xlim(), ax.get_ylim()
+    
+    # Erase previous graph
+    ax.cla()
+    
+    # Set the grid
+    ax.set_xlim(xmin,xmax)
+    ax.set_ylim(xmin,xmax)
+    ax.set_xticks(xticks)
+    ax.set_yticks(yticks)
     
     # Print total cost (sum of all route costs)
     ax.set_title(cost_header(util.get_total_cost(routes, coords)))

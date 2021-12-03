@@ -17,7 +17,7 @@ def get_data_us_capitals():
             y_array.append(int(y))
 
     coords = list(zip(x_array, y_array))
-    return np.arange(len(x_array)), coords
+    return coords, np.arange(len(x_array))
 
 def get_us_plot(figsize=(15,10)):
     us_nodes, us_coords = get_data_us_capitals()
@@ -33,7 +33,7 @@ def get_us_plot(figsize=(15,10)):
 
     return us_fig, us_ax
 
-def construct_route(route, nodes, coords, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True, label=None):
+def construct_route(route, coords, node_labels, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True, label=None):
     if ax == None or fig == None:
         fig, ax = plt.subplots(figsize=figsize)
         ax.set_xlim(0,1)
@@ -45,7 +45,7 @@ def construct_route(route, nodes, coords, fig=None, ax=None, figsize=(5,5), hide
         title = f"{label} ({title})"
         
     ax.set_title(title)
-    draw_nodes(coords, nodes, ax)
+    draw_nodes(coords, node_labels, ax)
     draw_route(route, coords, ax)
     
     if hide_axis_labels:
@@ -85,7 +85,7 @@ def draw_points(coords, node_labels, ax, show_labels=True):
     ax.scatter(x_customers, y_customers, color="k", s=20, facecolors='none', edgecolors='k', label="Customers")
     ax.scatter([x_depot], [y_depot], color="k", marker='s', s=50, facecolors='gray', label="Depot")
     if show_labels:
-        draw_labels(node_labels, coords, ax)
+        draw_labels(coords, node_labels, ax)
 
 def draw_nodes(coords, node_labels, ax=None, figsize = (8, 8), hide_axis_labels=True):
     if ax == None:
@@ -105,15 +105,15 @@ def draw_vehicle_routes(routes, route_colors, coords, ax):
         draw_route(route, coords, ax, color=color)
 
 
-def draw_labels(node_labels, node_coords, ax):
+def draw_labels(coords, node_labels, ax):
     for n, label in enumerate(node_labels):
         ax.annotate(
             str(label),
-            xy=node_coords[n],
+            xy=coords[n],
             xytext=(-4, 6),
             textcoords="offset points")
 
-def draw_routes(routes, node_ids, coords, vehicle_route_colors, ax, lim=None, hide_axis_labels=True):
+def draw_routes(routes, coords, node_labels, vehicle_route_colors, ax, lim=None, hide_axis_labels=True):
 
     # Erase previous graph
     ax.cla()
@@ -129,7 +129,7 @@ def draw_routes(routes, node_ids, coords, vehicle_route_colors, ax, lim=None, hi
     
     # Draw routes and points
     draw_vehicle_routes(routes, vehicle_route_colors, coords, ax)
-    draw_points(coords, node_ids, ax)        
+    draw_points(coords, node_labels, ax)        
     
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=2, frameon=False)
     

@@ -124,7 +124,8 @@ def draw_routes(routes, coords, node_labels, vehicle_route_colors, ax, lim=None,
     if lim != None:
         xmin, xmax, ymin, ymax = lim
     else:
-        xmin, xmax, ymin, ymax = ax.get_xlim(), ax.get_ylim()
+        xmin, xmax = ax.get_xlim()
+        ymin, ymax = ax.get_ylim()
     
     # Erase previous graph
     ax.cla()

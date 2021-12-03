@@ -20,7 +20,7 @@ def get_data_us_capitals():
     return coords, np.arange(len(x_array))
 
 def get_us_plot(figsize=(15,10)):
-    us_nodes, us_coords = get_data_us_capitals()
+    us_coords, us_nodes = get_data_us_capitals()
     us_nodes = list(range(len(us_coords)))
     us_depot, us_customer_nodes = us_nodes[0], us_nodes[1:]
 

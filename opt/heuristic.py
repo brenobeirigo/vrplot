@@ -100,9 +100,13 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
         # Update list of nodes to visit
         del nodes_to_visit[farthest_node_pos]
 
-    # Put depot in the beginning
+    
     route.rotate(len(route)-route.index(depot))
+    
+    # Last connection of farthest addition process
+    sols.append(copy(sols[-1])+[start])
     route.append(depot)
+    
     return tuple(route), [(tuple(s),) for s in sols]
 
 def get_route_2opt(route, coords):

@@ -19,15 +19,18 @@ def get_data_us_capitals():
     coords = list(zip(x_array, y_array))
     return np.arange(len(x_array)), coords
 
-def get_us_plot(figsize=(15,10), pad=500):
+def get_us_plot(figsize=(15,10)):
     us_nodes, us_coords = get_data_us_capitals()
     us_nodes = list(range(len(us_coords)))
     us_depot, us_customer_nodes = us_nodes[0], us_nodes[1:]
 
     us_fig, us_ax = plt.subplots(figsize=figsize)
     x, y = (list(zip(*us_coords)))
-    us_ax.set_xlim(min(x)-pad, max(x)+pad)
-    us_ax.set_ylim(min(y)-pad, max(y)+pad)
+    us_ax.set_xlim(-500, 8500)
+    us_ax.set_ylim(-500, 5500)
+    us_ax.set_xticks(np.arange(-500, 8500, 500))
+    us_ax.set_yticks(np.arange(-500, 5500, 500))
+
     return us_fig, us_ax
 
 def construct_route(route, nodes, coords, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True, label=None):

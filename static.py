@@ -8,7 +8,8 @@ def get_data_us_capitals():
     # http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html
     x_array = []
     y_array = []
-    with open(os.path.join("data","att48.tsp"), "r") as f:
+    path_data = os.path.join(os.getcwd(), "vrplot", "data","att48.tsp")
+    with open(path_data, "r") as f:
         
         for line in f.readlines()[6:-1]:
             _, x, y = line.split()

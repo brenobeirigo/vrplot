@@ -106,7 +106,7 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
     # Last connection of farthest addition process
     last_sol = copy(sols[-1])
     last_sol.append(start)
-    sols.append(last_edge)
+    sols.append(last_sol)
     route.append(depot)
     
     return tuple(route), [(tuple(s),) for s in sols]

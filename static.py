@@ -132,7 +132,7 @@ def draw_routes(routes, coords, node_labels, vehicle_route_colors, ax, lim=None,
     
     # Set the grid
     ax.set_xlim(xmin,xmax)
-    ax.set_ylim(xmin,xmax)
+    ax.set_ylim(ymin,ymax)
     ax.set_xticks(xticks)
     ax.set_yticks(yticks)
     

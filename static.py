@@ -44,7 +44,7 @@ def construct_route(route, coords, node_labels, fig=None, ax=None, figsize=(5,5)
     if label != None:
         title = f"{label} ({title})"
         
-    ax.set_title(title)
+    ax.set_title(title, pad=10)
     draw_nodes(coords, node_labels, ax)
     draw_route(route, coords, ax)
     
@@ -137,7 +137,7 @@ def draw_routes(routes, coords, node_labels, vehicle_route_colors, ax, lim=None,
     ax.set_yticks(yticks)
     
     # Print total cost (sum of all route costs)
-    ax.set_title(cost_header(util.get_total_cost(routes, coords)))
+    ax.set_title(cost_header(util.get_total_cost(routes, coords)), pad=10)
     
     # Draw routes and points
     draw_vehicle_routes(routes, vehicle_route_colors, coords, ax)

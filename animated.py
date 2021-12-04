@@ -24,7 +24,7 @@ def show_solutions(solutions, coords, node_labels, fig=None, ax=None, figsize=(8
         figure,
         static.draw_routes,
         solutions,
-        fargs=(coords, node_labels, vehicle_route_colors, axis,lim),
+        fargs=(coords, node_labels, vehicle_route_colors, axis, lim),
         interval=100,
         repeat=False)
     plt.close()
@@ -41,7 +41,7 @@ def construct_route(route, coords, node_labels, fig=None, ax=None, figsize=(8,8)
         figure, axis = fig, ax
         
     static.draw_nodes(coords, node_labels, axis)        
-    axis.set_title(static.cost_header(util.get_cost(route, coords)))
+    axis.set_title(static.cost_header(util.get_cost(route, coords)), pad=10)
 
     edges = list(zip(route[:-1], route[1:]))
 

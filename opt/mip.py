@@ -68,4 +68,4 @@ def get_solution_tsp(coords, nodes):
     selected = gp.tuplelist((i, j) for i, j in vals.keys() if vals[i, j] > 0.5)
 
     tour = subtour(selected)
-    return list(tour) + nodes[0], m.ObjVal
+    return list(tour) + [nodes[0]], m.ObjVal

@@ -25,13 +25,15 @@ def get_us_plot(figsize=(15,10)):
     us_depot, us_customer_nodes = us_nodes[0], us_nodes[1:]
 
     us_fig, us_ax = plt.subplots(figsize=figsize)
-
-    us_ax.set_xlim(-500, 8500)
-    us_ax.set_ylim(-500, 5500)
-    us_ax.set_xticks(np.arange(-500, 8500, 500))
-    us_ax.set_yticks(np.arange(-500, 5500, 500))
+    format_us_grid(us_ax)
 
     return us_fig, us_ax
+
+def format_us_grid(ax):
+    ax.set_xlim(-500, 8500)
+    ax.set_ylim(-500, 5500)
+    ax.set_xticks(np.arange(-500, 8500, 500))
+    ax.set_yticks(np.arange(-500, 5500, 500))
 
 def construct_route(route, coords, node_labels, fig=None, ax=None, figsize=(5,5), hide_axis_labels=True, label=None):
     if ax == None or fig == None:

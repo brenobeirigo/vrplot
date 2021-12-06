@@ -9,7 +9,8 @@ def get_route_nearest_neighborhood(nodes, node_coords, start=0, depot=0):
 
     nodes_to_visit = [depot] + list(nodes)
     route = deque([start])
-    
+    sols = []
+
     nodes_to_visit.remove(start)
 
     while len(nodes_to_visit) > 0:
@@ -30,6 +31,7 @@ def get_route_nearest_neighborhood(nodes, node_coords, start=0, depot=0):
 
         # Add closest node to route
         route.append(next_visit)
+        sols.append(copy(route))
 
         # Update list of nodes to visit
         del nodes_to_visit[next_visit_pos]
@@ -37,7 +39,9 @@ def get_route_nearest_neighborhood(nodes, node_coords, start=0, depot=0):
     # Put depot in the beginning
     route.rotate(len(route)-route.index(depot))
     route.append(depot)
-    return tuple(route)
+    sols.append(copy(route))
+
+    return tuple(route), [(tuple(s),) for s in sols]
 
 def get_farthest_node_pos(n, nodes_to_visit, node_coords):
     last_visited_coord = node_coords[n]
@@ -53,7 +57,7 @@ def get_farthest_node_pos(n, nodes_to_visit, node_coords):
 
 def cheapest_insertion_pos(n, route, node_coords):
     
-    if len(route) == 1:
+    if len(route) == 2:
         return 1
     
     cheapest_insertion_cost = np.inf
@@ -74,7 +78,7 @@ def cheapest_insertion_pos(n, route, node_coords):
 def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
 
     nodes_to_visit = [depot] + list(nodes)
-    route = deque([start])
+    route = deque([start,start])
     sols = []
     nodes_to_visit.remove(start)
     
@@ -84,8 +88,8 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
         farthest_node_pos = None
         farthest_node_cost = -1
         
-        for n in route:
-            
+        for i in range(len(route)-1):
+            n = route[i]
             n_farthest_node_pos, n_cost = get_farthest_node_pos(n, nodes_to_visit, node_coords)
 
             if n_cost > farthest_node_cost:
@@ -100,7 +104,7 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
         # Update list of nodes to visit
         del nodes_to_visit[farthest_node_pos]
 
-    
+    route.pop()
     route.rotate(len(route)-route.index(depot))
     
     # Last connection of farthest addition process
@@ -112,7 +116,7 @@ def get_route_farthest_addition(nodes, node_coords, start=0, depot=0):
     return tuple(route), [(tuple(s),) for s in sols]
 
 def get_route_2opt(route, coords):
-    
+    # Reference: https://www.kaggle.com/jsaguiar/fast-2-opt-with-cython
     min_change = 0
     # Find the best move
     for i in range(len(route) - 2):
@@ -135,16 +139,13 @@ def get_route_2opt(route, coords):
     
     return tuple(route_updated)
 
-def neighborhood_search_2opt(route, coords, stop_after=None):
+def neighborhood_search_2opt(route, coords):
     
     route_cost = get_cost(route, coords)
 
     improvement_history = [(route, route_cost)]
 
     while True:
-        
-        if stop_after !=None and len(improvement_history) >= stop_after:
-            break
         
         improved_route = get_route_2opt(route, coords)
         improved_route_cost = get_cost(improved_route, coords)

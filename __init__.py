@@ -1,4 +1,3 @@
-__all__ = ["util", "static", "animated"]
+__all__ = ["util", "static", "animated", "opt"]
 
 from vrplot import *
-from vrplot import opt

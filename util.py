@@ -1,6 +1,9 @@
 import numpy as np
 
 def get_random_nodes(n_customers, x_depot=0.5, y_depot=0.5):
+    
+    # TODO add seed
+    
     # Random x and y coordinates for customers
     x_customers = np.random.rand(n_customers)
     y_customers = np.random.rand(n_customers)

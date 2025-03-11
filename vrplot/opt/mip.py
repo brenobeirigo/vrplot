@@ -6,6 +6,9 @@ import vrplot
 
 # SOURCE: https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/traveling_salesman/tsp_gcl.ipynb#scrollTo=qkCBabLarfBi
 
+env = gp.Env(empty=True)
+env.setParam('OutputFlag', 0)
+env.start()
 
 
 def get_solution_tsp(coords, nodes):
@@ -52,7 +55,7 @@ def get_solution_tsp(coords, nodes):
     vars = m.addVars(dist.keys(), obj=dist, vtype=GRB.BINARY, name='x')
 
     # Symmetric direction: Copy the object
-    for i, j in vars.keys():
+    for i, j in list(vars.keys()):
         vars[j, i] = vars[i, j]  # edge in opposite direction
 
     # Constraints: two edges incident to each city

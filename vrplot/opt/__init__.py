@@ -1,2 +1,4 @@
 __all__ = ["complexity", "heuristic", "metaheuristic", "mip"]
-from vrplot.opt import *
+
+# Explicit relative imports to expose submodules without wildcard recursion
+from . import complexity, heuristic, metaheuristic, mip

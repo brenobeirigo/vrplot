@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 vrplot.egg-info/
+.vscode
+.pytest_cache

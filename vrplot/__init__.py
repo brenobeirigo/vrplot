@@ -1,3 +1,4 @@
 __all__ = ["util", "static", "animated", "opt"]
 
-from vrplot import *
+# Explicitly import submodules to avoid recursive wildcard imports
+from . import util, static, animated, opt

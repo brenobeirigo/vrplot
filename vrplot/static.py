@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
@@ -8,9 +8,14 @@ def get_data_us_capitals():
     # http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html
     x_array = []
     y_array = []
-    path_data = os.path.join("data", "raw", "att48.tsp")
+    # Prefer repository data folder when available; fall back to relative path
+    base_dir = Path(__file__).resolve().parents[1]
+    path_data = base_dir / "data" / "raw" / "att48.tsp"
+    if not path_data.exists():
+        # Last-resort fallback to current working directory layout
+        path_data = Path("data") / "raw" / "att48.tsp"
+
     with open(path_data, "r") as f:
-        
         for line in f.readlines()[6:-1]:
             _, x, y = line.split()
             x_array.append(int(x))

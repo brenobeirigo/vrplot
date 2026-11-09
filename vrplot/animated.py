@@ -28,7 +28,11 @@ def show_solutions(solutions, coords, node_labels, fig=None, ax=None, figsize=(8
         interval=100,
         repeat=False)
     plt.close()
-    return HTML(animator.to_html5_video())
+    try:
+        return HTML(animator.to_html5_video())
+    except RuntimeError:
+        # Fallback for environments without ffmpeg (e.g., Quarto/Jupyter render).
+        return HTML(animator.to_jshtml())
 
 
 def construct_route(route, coords, node_labels, fig=None, ax=None, figsize=(8,8), route_color="red"):
@@ -54,7 +58,11 @@ def construct_route(route, coords, node_labels, fig=None, ax=None, figsize=(8,8)
         repeat=False)
     
     plt.close()
-    return HTML(animator.to_html5_video())
+    try:
+        return HTML(animator.to_html5_video())
+    except RuntimeError:
+        # Fallback for environments without ffmpeg (e.g., Quarto/Jupyter render).
+        return HTML(animator.to_jshtml())
 
     # If not closed, plot the first solution
     #plt.close()
